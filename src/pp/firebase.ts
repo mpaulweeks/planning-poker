@@ -1,6 +1,6 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, ref, set } from "firebase/database";
+import { get, getDatabase, onDisconnect, ref, set } from "firebase/database";
 import { Room, RoomInit, User } from "./types";
 
 const firebaseConfig = {
@@ -28,8 +28,13 @@ export class FirebaseApi {
 
     const roomRef = ref(this.database, `rooms/${init.rid}`);
     const userRef = ref(this.database, `rooms/${init.rid}/users/${this.uid}`);
+    onDisconnect(userRef).remove();
+
     const room = await get(roomRef);
-    if (room.exists()) {
+    const match = room.exists() && (
+      this.isArrayEqual((room.val() as Room).options, init.options)
+    );
+    if (match) {
       await set(userRef, user);
     } else {
       const newRoom: Room = {
@@ -44,5 +49,9 @@ export class FirebaseApi {
     }
     const latest = await get(roomRef);
     return latest.val() as Room;
+  }
+
+  private isArrayEqual(a: string[], b: string[]): boolean {
+    return a.join(',') === b.join(',');
   }
 }
