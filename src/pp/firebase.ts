@@ -1,6 +1,7 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { get, getDatabase, onDisconnect, onValue, ref, set, update } from "firebase/database";
+import { getStorageName } from "./localStorage";
 import { RoomInit, RoomState, RoomUpdate, UserState } from "./types";
 
 const firebaseConfig = {
@@ -35,7 +36,7 @@ export class FirebaseApi {
     const { init } = this;
     const user: UserState = {
       uid: init.uid,
-      name: '',
+      name: getStorageName(),
       vote: null,
     };
 

@@ -1,6 +1,7 @@
 import { useDB } from "./db";
 import { RoomInit } from "./types";
 import styles from './Room.module.css';
+import { getStorageName, setStorageName } from "./localStorage";
 
 export function Room(props: {
   init: RoomInit;
@@ -11,12 +12,14 @@ export function Room(props: {
     return <h1>loading {props.init.rid}</h1>;
   }
 
-  const users = Object.values(room.users);
-  console.log(users);
-
-  for (let i = 0; i < 5; i++) {
-    // users.push({uid: i.toString(), name: 'r'+i, vote: null});
+  if (user.name !== getStorageName()) {
+    setStorageName(user.name);
   }
+
+  const users = Object.values(room.users);
+  // for (let i = 0; i < 5; i++) {
+  //   users.push({uid: i.toString(), name: 'r'+i, vote: null});
+  // }
 
   const voteNums = users.map(u => {
     const { vote } = u;
@@ -29,8 +32,11 @@ export function Room(props: {
   return (
     <div className={styles.Room}>
       <header>
-        <div>
-          <b>{room.rid}</b>
+        <div style={{
+          fontSize: '2em',
+          fontWeight: 'bold',
+        }}>
+          {room.rid}
         </div>
         <div className={styles.Self}>
           <input
