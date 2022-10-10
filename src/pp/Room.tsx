@@ -1,14 +1,21 @@
+import { useDB } from "./db";
+import { RoomInit } from "./types";
+
 export function Room(props: {
-  rid: string;
-  options: string[];
+  init: RoomInit;
 }) {
+  const {api, room} = useDB(props);
+
+  if (!room) {
+    return <h1>loading {props.init.rid}</h1>;
+  }
   return (
     <>
       <h1>
-        {props.rid}
+        {room.rid}
       </h1>
       <div>
-        {props.options}
+        {room.options.join(', ')}
       </div>
     </>
   );

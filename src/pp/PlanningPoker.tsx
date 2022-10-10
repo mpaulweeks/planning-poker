@@ -1,14 +1,19 @@
 import { Room } from "./Room";
+import { RoomInit } from "./types";
 import { Welcome } from "./Welcome";
 
 export function PlanningPoker() {
   const searchParams = new URLSearchParams(window.location.search);
-  const room = searchParams.get('room');
+  const rid = searchParams.get('room');
   const optionsStr = searchParams.get('options');
   const options = (optionsStr ?? '').split(',');
 
-  if (room && options.length > 0) {
-    return <Room rid={room} options={options} />;
+  if (rid && options.length > 0) {
+    const init: RoomInit = {
+      rid,
+      options,
+    }
+    return <Room init={init} />;
   } else {
     return <Welcome />;
   }
