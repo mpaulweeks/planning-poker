@@ -9,7 +9,11 @@ export function Room(props: {
   const {api, room} = useDB(props);
   const user = room?.users[props.init.uid];
   if (!(room && user)) {
-    return <h1>loading {props.init.rid}</h1>;
+    return (
+      <div className={styles.Loading}>
+        loading {props.init.rid}
+      </div>
+    );
   }
 
   if (user.name !== getStorageName()) {

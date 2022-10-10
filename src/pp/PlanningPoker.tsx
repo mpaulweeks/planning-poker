@@ -1,12 +1,12 @@
 import { Room } from "./Room";
-import { RoomInit } from "./types";
+import { OptionsSeparator, RoomInit } from "./types";
 import { Welcome } from "./Welcome";
 
 export function PlanningPoker() {
   const searchParams = new URLSearchParams(window.location.search);
   const rid = searchParams.get('room');
   const optionsStr = searchParams.get('options');
-  const options = (optionsStr ?? '').split(',');
+  const options = (optionsStr ?? '').split(OptionsSeparator);
   const uid = new Date().getTime().toString();
 
   if (rid && options.length > 0) {

@@ -1,0 +1,13 @@
+.Welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+
+  min-height: 100vh;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.Welcome form > * {
+  margin: 1rem 0;
+}
