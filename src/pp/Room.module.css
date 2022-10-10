@@ -31,6 +31,21 @@
   flex: 1;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
+
+  font-size: 1.5em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+.Room section .Vote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid grey;
+  padding: 1em;
+  box-sizing: border-box;
 }
 .Room footer {
   display: flex;

@@ -35,7 +35,7 @@ export class FirebaseApi {
     const { init } = this;
     const user: UserState = {
       uid: init.uid,
-      name: '???',
+      name: '',
       vote: null,
     };
 

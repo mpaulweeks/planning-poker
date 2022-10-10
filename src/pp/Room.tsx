@@ -14,6 +14,10 @@ export function Room(props: {
   const users = Object.values(room.users);
   console.log(users);
 
+  for (let i = 0; i < 5; i++) {
+    // users.push({uid: i.toString(), name: 'r'+i, vote: null});
+  }
+
   const voteNums = users.map(u => {
     const { vote } = u;
     if (!vote) { return NaN; }
@@ -29,9 +33,12 @@ export function Room(props: {
           <b>{room.rid}</b>
         </div>
         <div className={styles.Self}>
-          <input value={user.name} onChange={evt => api.current.updateUser({
-            name: evt.target.value,
-          })} />
+          <input
+            value={user.name}
+            placeholder="your name here"
+            onChange={evt => api.current.updateUser({
+              name: evt.target.value,
+            })} />
           {room.options.map((vote, vi) => (
             <button
               key={vi}
@@ -49,9 +56,9 @@ export function Room(props: {
       </header>
       <section>
         {users.map(user => (
-          <div key={user.uid}>
+          <div key={user.uid} className={styles.Vote}>
             <div>
-              {user.name}
+              {user.name ? user.name : <i>???</i>}
             </div>
             <div>
               {!user.vote ? (
