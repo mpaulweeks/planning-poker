@@ -16,7 +16,7 @@ export function Welcome() {
   return (
     <div className={styles.Welcome}>
       <h1>
-        welcome
+        planning-poker
       </h1>
       <form onSubmit={evt => {
         evt.preventDefault();
