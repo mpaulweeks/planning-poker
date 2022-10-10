@@ -7,9 +7,11 @@ export function PlanningPoker() {
   const rid = searchParams.get('room');
   const optionsStr = searchParams.get('options');
   const options = (optionsStr ?? '').split(',');
+  const uid = new Date().getTime().toString();
 
   if (rid && options.length > 0) {
     const init: RoomInit = {
+      uid,
       rid,
       options,
     }

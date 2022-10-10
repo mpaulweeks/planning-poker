@@ -1,25 +1,27 @@
-export interface User {
+export interface UserState {
   uid: string;
   name: string;
   vote: string | null;
 }
 
 export interface RoomInit {
+  uid: string;
   rid: string;
   options: string[];
 }
 
-export interface Room {
+export interface RoomState {
   rid: string;
   options: string[];
   reveal: boolean;
   users: {
-    [key: string]: User;
+    [key: string]: UserState;
   }
 }
+export type RoomUpdate = (state: RoomState) => void;
 
 export interface Database {
   rooms: {
-    [key: string]: Room;
+    [key: string]: RoomState;
   }
 }
