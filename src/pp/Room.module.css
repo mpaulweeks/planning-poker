@@ -1,0 +1,40 @@
+.Room {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+
+  min-height: 100vh;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.Room > * {
+  padding: 1em 1em;
+}
+.Room input,
+.Room button {
+  margin: 0.5em;
+}
+.Room header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Room header .Self {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.Room section {
+  flex: 1;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+.Room footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
