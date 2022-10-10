@@ -56,7 +56,9 @@ export function Room(props: {
       </header>
       <section>
         {users.map(user => (
-          <div key={user.uid} className={styles.Vote}>
+          <div key={user.uid} className={styles.Vote} style={{
+            borderColor: user.vote ? 'lightgreen' : 'salmon',
+          }}>
             <div>
               {user.name ? user.name : <i>???</i>}
             </div>
