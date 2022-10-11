@@ -7,7 +7,7 @@ export function Room(props: {
   init: RoomInit;
 }) {
   const {api, room} = useDB(props);
-  const user = room?.users[props.init.uid];
+  const user = (room?.users ?? {})[props.init.uid];
   if (!(room && user)) {
     return (
       <div className={styles.Loading}>
@@ -20,7 +20,7 @@ export function Room(props: {
     setStorageName(user.name);
   }
 
-  const users = Object.values(room.users);
+  const users = Object.values(room.users ?? {});
   // for (let i = 0; i < 5; i++) {
   //   users.push({uid: i.toString(), name: 'r'+i, vote: null});
   // }

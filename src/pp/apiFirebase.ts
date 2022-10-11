@@ -1,39 +1,40 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { get, getDatabase, onDisconnect, onValue, ref, set, update } from "firebase/database";
+import { FirebaseConfig } from "./config";
 import { getStorageName } from "./localStorage";
 import { RoomInit, RoomState, RoomUpdate, UserState } from "./types";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC6-Ia_K3-ZDkoxfLNUALK3SDHCeH4_0nw",
-  authDomain: "planning-poker-994c5.firebaseapp.com",
-  projectId: "planning-poker-994c5",
-  storageBucket: "planning-poker-994c5.appspot.com",
-  messagingSenderId: "481963696295",
-  appId: "1:481963696295:web:6aae9109390cb528207b82",
-  measurementId: "G-HJKY9SPZ1Y"
-};
-
 export class FirebaseApi {
-  app = initializeApp(firebaseConfig);
+  private static _instance: FirebaseApi | undefined;
+  static get instance() {
+    return this._instance ?? (this._instance = new FirebaseApi());
+  }
+
+  app = initializeApp(FirebaseConfig);
   analytics = getAnalytics(this.app);
   database = getDatabase(this.app);
-  constructor(readonly init: RoomInit) {};
+  private constructor() {}
 
-  async updateUser(user: Partial<UserState>): Promise<void> {
-    const { init } = this;
+  async getRooms(): Promise<RoomState[]> {
+    const roomsRef = ref(this.database, `rooms`);
+    const rooms = await get(roomsRef);
+    const lookup: { [key: string]: RoomState } = rooms.val();
+    const states = Object.values(lookup);
+    return states;
+  }
+
+  async updateUser(init: RoomInit, user: Partial<UserState>): Promise<void> {
     const userRef = ref(this.database, `rooms/${init.rid}/users/${init.uid}`);
     await update(userRef, user);
   }
 
-  async updateRoom(room: Partial<RoomState>): Promise<void> {
-    const { init } = this;
+  async updateRoom(init: RoomInit, room: Partial<RoomState>): Promise<void> {
     const roomRef = ref(this.database, `rooms/${init.rid}`);
     await update(roomRef, room);
   }
 
-  async connect(cb: RoomUpdate): Promise<void> {
-    const { init } = this;
+  async connect(init: RoomInit, cb: RoomUpdate): Promise<void> {
     const user: UserState = {
       uid: init.uid,
       name: getStorageName(),

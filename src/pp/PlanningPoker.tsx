@@ -1,9 +1,15 @@
+import { Admin } from "./Admin";
 import { Room } from "./Room";
 import { OptionsSeparator, RoomInit } from "./types";
 import { Welcome } from "./Welcome";
 
 export function PlanningPoker() {
   const searchParams = new URLSearchParams(window.location.search);
+  const admin = searchParams.get('admin');
+  if (admin) {
+    return <Admin />
+  }
+
   const rid = searchParams.get('room');
   const optionsStr = searchParams.get('options');
   const options = (optionsStr ?? '').split(OptionsSeparator);

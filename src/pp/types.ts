@@ -18,7 +18,7 @@ export interface RoomState {
   reveal: boolean;
   users: {
     [key: string]: UserState;
-  }
+  } | undefined;
 }
 export type RoomUpdate = (state: RoomState) => void;
 

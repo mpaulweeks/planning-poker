@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { FirebaseApi } from "./firebase";
+import { RoomApi } from "./apiRoom";
 import { RoomInit, RoomState } from "./types";
 
 export function useDB(props: {
   init: RoomInit;
 }) {
-  const api = useRef(new FirebaseApi(props.init));
+  const api = useRef(new RoomApi(props.init));
   const [room, setRoom] = useState<RoomState | null>();
 
   useEffect(() => {
