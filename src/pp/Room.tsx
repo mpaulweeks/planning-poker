@@ -97,6 +97,11 @@ export function Room(props: {
             {room.reveal ? 'HIDE': 'REVEAL'}
           </button>
         </div>
+        <div>
+          <button onClick={() => api.current.resetRoom()}>
+            RESET
+          </button>
+        </div>
       </footer>
     </div>
   );

@@ -24,14 +24,24 @@ export class FirebaseApi {
     return states;
   }
 
-  async updateUser(init: RoomInit, user: Partial<UserState>): Promise<void> {
-    const userRef = ref(this.database, `rooms/${init.rid}/users/${init.uid}`);
-    await update(userRef, user);
+  async resetRoom(init: RoomInit): Promise<void> {
+    const roomRef = ref(this.database, `rooms/${init.rid}`);
+    const room: RoomState = (await get(roomRef)).val();
+    const users: UserState[] = Object.values(room.users ?? {});
+    users.forEach(u => u.vote = null);
+    await this.updateRoom(init, {
+      users: room.users,
+    });
   }
 
   async updateRoom(init: RoomInit, room: Partial<RoomState>): Promise<void> {
     const roomRef = ref(this.database, `rooms/${init.rid}`);
     await update(roomRef, room);
+  }
+
+  async updateUser(init: RoomInit, user: Partial<UserState>): Promise<void> {
+    const userRef = ref(this.database, `rooms/${init.rid}/users/${init.uid}`);
+    await update(userRef, user);
   }
 
   async connect(init: RoomInit, cb: RoomUpdate): Promise<void> {
