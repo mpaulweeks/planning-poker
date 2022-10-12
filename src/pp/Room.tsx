@@ -21,10 +21,6 @@ export function Room(props: {
   }
 
   const users = Object.values(room.users ?? {});
-  // for (let i = 0; i < 5; i++) {
-  //   users.push({uid: i.toString(), name: 'r'+i, vote: null});
-  // }
-
   const voteNums = users.map(u => {
     const { vote } = u;
     if (!vote) { return NaN; }

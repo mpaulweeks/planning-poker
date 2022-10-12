@@ -85,7 +85,5 @@ export class FirebaseApi {
     onValue(roomRef, snapshot => {
       cb(snapshot.val());
     });
-    // const latest = await get(roomRef);
-    // return latest.val() as RoomState;
   }
 }
