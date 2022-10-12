@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Admin.module.css';
 import { FirebaseApi } from '../lib/apiFirebase';
 import { RoomState } from '../lib/types';
