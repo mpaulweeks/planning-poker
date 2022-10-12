@@ -8,16 +8,28 @@ export function Admin() {
 
   useEffect(() => {
     (async () => {
+      await FirebaseApi.instance.removeEmptyRooms();
       const rooms = await FirebaseApi.instance.getRooms();
       setRooms(rooms);
     })()
   }, [setRooms]);
 
-  console.log(rooms);
-
   return (
     <div className={styles.Admin}>
-      {rooms ? rooms.map(r => (
+      <h1>
+        Planning Poker Admin
+      </h1>
+      {rooms === undefined && (
+        <div>
+          loading...
+        </div>
+      )}
+      {rooms && rooms.length === 0 && (
+        <div>
+          no rooms
+        </div>
+      )}
+      {rooms && rooms.length > 0 && rooms.map(r => (
         <div key={r.rid}>
           <h1>
             {r.rid}
@@ -31,11 +43,7 @@ export function Admin() {
             =</div>
           ))}
         </div>
-      )) : (
-        <div>
-          loading...
-        </div>
-      )}
+      ))}
     </div>
   )
 }

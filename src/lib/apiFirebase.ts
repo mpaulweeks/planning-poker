@@ -1,6 +1,6 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, onDisconnect, onValue, ref, set, update } from "firebase/database";
+import { get, getDatabase, onDisconnect, onValue, ref, remove, set, update } from "firebase/database";
 import { FirebaseConfig } from "./config";
 import { getStorageName } from "./localStorage";
 import { RoomInit, RoomState, RoomUpdate, UserState } from "./types";
@@ -19,9 +19,20 @@ export class FirebaseApi {
   async getRooms(): Promise<RoomState[]> {
     const roomsRef = ref(this.database, `rooms`);
     const rooms = await get(roomsRef);
-    const lookup: { [key: string]: RoomState } = rooms.val();
-    const states = Object.values(lookup);
+    const lookup: { [key: string]: RoomState } | undefined = rooms.val();
+    const states = Object.values(lookup ?? {});
     return states;
+  }
+
+  async removeEmptyRooms() {
+    const rooms = await this.getRooms();
+    for (const room of rooms) {
+      const users = room.users ?? {};
+      if (Object.keys(users).length === 0) {
+        const roomRef = ref(this.database, `rooms/${room.rid}`);
+        await remove(roomRef);
+      }
+    }
   }
 
   async resetRoom(init: RoomInit): Promise<void> {
@@ -45,6 +56,8 @@ export class FirebaseApi {
   }
 
   async connect(init: RoomInit, cb: RoomUpdate): Promise<void> {
+    await this.removeEmptyRooms();
+
     const user: UserState = {
       uid: init.uid,
       name: getStorageName(),
