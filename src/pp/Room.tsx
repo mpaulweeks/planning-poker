@@ -1,7 +1,7 @@
-import { useDB } from "./db";
-import { RoomInit } from "./types";
+import { useDB } from "../hooks/useDB";
+import { RoomInit } from "../lib/types";
 import styles from './Room.module.css';
-import { getStorageName, setStorageName } from "./localStorage";
+import { getStorageName, setStorageName } from "../lib/localStorage";
 
 export function Room(props: {
   init: RoomInit;

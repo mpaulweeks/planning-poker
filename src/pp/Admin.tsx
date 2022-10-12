@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Admin.module.css';
-import { FirebaseApi } from './apiFirebase';
-import { RoomState } from './types';
+import { FirebaseApi } from '../lib/apiFirebase';
+import { RoomState } from '../lib/types';
 
 export function Admin() {
   const [rooms, setRooms] = useState<RoomState[]>();

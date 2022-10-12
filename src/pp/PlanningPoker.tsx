@@ -1,6 +1,6 @@
 import { Admin } from "./Admin";
 import { Room } from "./Room";
-import { OptionsSeparator, RoomInit } from "./types";
+import { OptionsSeparator, RoomInit } from "../lib/types";
 import { Welcome } from "./Welcome";
 
 export function PlanningPoker() {

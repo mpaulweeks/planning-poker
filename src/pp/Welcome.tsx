@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OptionsSeparator } from "./types";
+import { OptionsSeparator } from "../lib/types";
 import styles from './Welcome.module.css';
 
 export function Welcome() {

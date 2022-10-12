@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { RoomApi } from "./apiRoom";
-import { RoomInit, RoomState } from "./types";
+import { RoomApi } from "../lib/apiRoom";
+import { RoomInit, RoomState } from "../lib/types";
 
 export function useDB(props: {
   init: RoomInit;
