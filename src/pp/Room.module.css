@@ -11,16 +11,23 @@
   justify-content: stretch;
   align-items: stretch;
 
+  font-size: 20px;
+
   min-height: 100vh;
-  padding: 1em;
+  padding: 1rem;
   box-sizing: border-box;
 }
 .Room > * {
-  padding: 1em 1em;
+  padding: 1rem 1rem;
 }
 .Room input,
 .Room button {
+  font-size: inherit;
   margin: 0.5em;
+  padding: 0.5em;
+}
+.Room button {
+  padding: 0.5em 1em;
 }
 .Room header {
   display: flex;
@@ -39,7 +46,6 @@
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
 
-  font-size: 1.5em;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
@@ -50,6 +56,7 @@
   justify-content: center;
   align-items: center;
 
+  font-size: 2em;
   border: 0.5rem solid grey;
   padding: 1rem;
   box-sizing: border-box;

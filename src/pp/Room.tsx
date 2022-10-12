@@ -37,7 +37,7 @@ export function Room(props: {
     <div className={styles.Room}>
       <header>
         <div style={{
-          fontSize: '2em',
+          fontSize: '1.5em',
           fontWeight: 'bold',
         }}>
           {room.rid}
@@ -72,9 +72,9 @@ export function Room(props: {
             <div>
               {user.name ? user.name : <i>???</i>}
             </div>
-            <div>
+            <div style={{ fontSize: '1.5em', }}>
               {!user.vote ? (
-                <i>pending</i>
+                <i>vote?</i>
               ) : (
                 <b>
                   {room.reveal ? user.vote : 'ready'}
