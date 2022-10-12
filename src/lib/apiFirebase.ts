@@ -69,10 +69,7 @@ export class FirebaseApi {
     onDisconnect(userRef).remove();
 
     const room = await get(roomRef);
-    const match = room.exists() && (
-      this.isArrayEqual((room.val() as RoomState).options, init.options)
-    );
-    if (match) {
+    if (room.exists()) {
       await set(userRef, user);
     } else {
       const newRoom: RoomState = {
@@ -90,9 +87,5 @@ export class FirebaseApi {
     });
     // const latest = await get(roomRef);
     // return latest.val() as RoomState;
-  }
-
-  private isArrayEqual(a: string[], b: string[]): boolean {
-    return a.join(',') === b.join(',');
   }
 }
