@@ -11,4 +11,3 @@ export const FirebaseConfig: FirebaseOptions = {
   appId: process.env.REACT_APP_appId,
   measurementId: process.env.REACT_APP_measurementId,
 };
-console.log(FirebaseConfig)

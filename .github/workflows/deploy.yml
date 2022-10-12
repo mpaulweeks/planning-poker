@@ -25,9 +25,7 @@ jobs:
         shell: bash
         env:
           REACT_ENV: ${{ secrets.ENV }}
-        run: |
-          echo "$REACT_ENV" > .env
-          cat .env
+        run: echo "$REACT_ENV" > .env
 
       - name: npm install
         run: npm install
