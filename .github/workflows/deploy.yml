@@ -26,6 +26,7 @@ jobs:
           ls -al
           echo ${{ secrets.ENV }} > .env
           ls -al
+          cat .env
 
       - name: npm install
         run: npm install
