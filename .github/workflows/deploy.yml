@@ -22,10 +22,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Setup env
+        shell: bash
+        env:
+          REACT_ENV: ${{ secrets.ENV }}
         run: |
-          ls -al
-          echo ${{ secrets.ENV }} > .env
-          ls -al
+          'echo "$REACT_ENV" > .env'
           cat .env
 
       - name: npm install
