@@ -21,6 +21,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup env
+        run: |
+          echo ${{ secrets.ENV }} > .env
+          ls
+
       - name: npm install
         run: npm install
 
