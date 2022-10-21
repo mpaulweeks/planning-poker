@@ -39,8 +39,8 @@ export function Admin() {
           </div>
           {Object.values((r.users ?? {})).map(u => (
             <div key={u.uid}>
-              {u.uid} {u.name} {u.vote}
-            =</div>
+              {u.uid} // {u.vote} // {u.spectate} // {u.name}
+            </div>
           ))}
         </div>
       ))}
