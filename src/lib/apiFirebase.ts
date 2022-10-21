@@ -62,6 +62,7 @@ export class FirebaseApi {
     const user: UserState = {
       uid: init.uid,
       name: getStorageName(),
+      spectate: false,
       vote: null,
     };
 

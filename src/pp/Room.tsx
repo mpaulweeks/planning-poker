@@ -7,8 +7,8 @@ export function Room(props: {
   init: RoomInit;
 }) {
   const {api, room} = useDB(props);
-  const user = (room?.users ?? {})[props.init.uid];
-  if (!(room && user)) {
+  const thisUser = (room?.users ?? {})[props.init.uid];
+  if (!(room && thisUser)) {
     return (
       <div className={styles.Loading}>
         loading {props.init.rid}
@@ -16,13 +16,14 @@ export function Room(props: {
     );
   }
 
-  if (user.name !== getStorageName()) {
-    setStorageName(user.name);
+  if (thisUser.name !== getStorageName()) {
+    setStorageName(thisUser.name);
   }
 
   const users = Object.values(room.users ?? {});
   const voteNums = users.map(u => {
-    const { vote } = u;
+    const { spectate, vote } = u;
+    if (spectate) { return NaN; }
     if (!vote) { return NaN; }
     const num = parseInt(vote);
     return num;
@@ -40,7 +41,7 @@ export function Room(props: {
         </div>
         <div className={styles.Self}>
           <input
-            value={user.name}
+            value={thisUser.name}
             placeholder="your name here"
             onChange={evt => api.current.updateUser({
               name: evt.target.value,
@@ -48,30 +49,50 @@ export function Room(props: {
           {room.options.map((vote, vi) => (
             <button
               key={vi}
-              style={vote === user.vote ? {
+              style={(!thisUser.spectate && vote === thisUser.vote) ? {
                 border: '2px solid green',
               } : {}}
               onClick={() => api.current.updateUser({
-                vote: vote === user.vote ? null : vote,
+                spectate: false,
+                vote: vote === thisUser.vote ? null : vote,
               })}
             >
               {vote}
             </button>
           ))}
+          <button
+            style={(thisUser.spectate) ? {
+              border: '2px solid green',
+            } : {}}
+            onClick={() => api.current.updateUser({
+              spectate: thisUser.spectate ? false : true,
+              vote: null,
+            })}
+          >
+            SPECTATE
+          </button>
         </div>
       </header>
       <section>
         {users.map(user => (
           <div key={user.uid} className={styles.Vote} style={{
-            borderColor: user.vote ? 'lightgreen' : 'salmon',
+            borderColor: (
+              (user.spectate && 'grey') ||
+              (user.vote && 'lightgreen') ||
+              'salmon'
+            ),
           }}>
             <div>
               {user.name ? user.name : <i>???</i>}
             </div>
             <div style={{ fontSize: '1.5em', }}>
-              {!user.vote ? (
+              {user.spectate && (
+                <i>abstain</i>
+              )}
+              {!user.spectate && !user.vote && (
                 <i>vote?</i>
-              ) : (
+              )}
+              {!user.spectate && user.vote && (
                 <b>
                   {room.reveal ? user.vote : 'ready'}
                 </b>

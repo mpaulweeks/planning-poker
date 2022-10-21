@@ -3,6 +3,7 @@ export const OptionsSeparator = '-';
 export interface UserState {
   uid: string;
   name: string;
+  spectate: boolean;
   vote: string | null;
 }
 
