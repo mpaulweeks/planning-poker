@@ -42,6 +42,7 @@ export class FirebaseApi {
     users.forEach(u => u.vote = null);
     await this.updateRoom(init, {
       users: room.users,
+      reveal: false,
     });
   }
 
