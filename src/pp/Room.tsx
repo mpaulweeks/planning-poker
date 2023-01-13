@@ -1,5 +1,5 @@
 import { useDB } from "../hooks/useDB";
-import { RoomInit } from "../lib/types";
+import { RoomInit, UserState } from "../lib/types";
 import styles from './Room.module.css';
 import { getStorageName, setStorageName } from "../lib/localStorage";
 
@@ -29,6 +29,14 @@ export function Room(props: {
     return num;
   }).filter(v => !isNaN(v));
   const average = voteNums.reduce((sum, elm) => sum + elm, 0) / voteNums.length;
+  
+  function userToColor(user: UserState, opacity?: string): string {
+    return (
+      (user.spectate && '#808080') || // grey
+      (user.vote && '#90EE90') || // lightgreen
+      '#FA8072' // salmon
+    ) + (opacity ?? '');
+  }
 
   return (
     <div className={styles.Room}>
@@ -76,11 +84,8 @@ export function Room(props: {
       <section>
         {users.map(user => (
           <div key={user.uid} className={styles.Vote} style={{
-            borderColor: (
-              (user.spectate && 'grey') ||
-              (user.vote && 'lightgreen') ||
-              'salmon'
-            ),
+            borderColor: userToColor(user),
+            backgroundColor: userToColor(user, '80),
           }}>
             <div>
               {user.name ? user.name : <i>???</i>}
