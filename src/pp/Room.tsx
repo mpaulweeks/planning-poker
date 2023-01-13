@@ -85,7 +85,7 @@ export function Room(props: {
         {users.map(user => (
           <div key={user.uid} className={styles.Vote} style={{
             borderColor: userToColor(user),
-            backgroundColor: userToColor(user, '80),
+            backgroundColor: userToColor(user, '80'),
           }}>
             <div>
               {user.name ? user.name : <i>???</i>}
