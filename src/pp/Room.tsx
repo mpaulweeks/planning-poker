@@ -107,7 +107,7 @@ export function Room(props: {
             </button>
           </div>
           <div>
-            <button onClick={() => window.location.href = '/'}>
+            <button onClick={() => window.location.href = window.location.href.split('?')[0]}>
               EXIT
             </button>
           </div>
