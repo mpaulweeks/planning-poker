@@ -10,6 +10,7 @@
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
+  gap: 1rem;
 
   font-size: 20px;
 
@@ -17,13 +18,9 @@
   padding: 1rem;
   box-sizing: border-box;
 }
-.Room > * {
-  padding: 1rem 1rem;
-}
 .Room input,
 .Room button {
   font-size: inherit;
-  margin: 0.5em;
   padding: 0.5em;
 }
 .Room button {
@@ -34,19 +31,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 .Room header section {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 .Room main {
   position: relative;
 
   flex: 1;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
+  /* border: 1px solid grey; */
+  /* padding: 1rem; */
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -69,7 +68,8 @@
   left: 0;
   height: 100%;
   width: 100%;
-  padding: 2em;
+  padding: 2rem;
+  font-size: 1.5em;
   box-sizing: border-box;
   background-color: rgba(0,0,0,0.2);
 
@@ -79,7 +79,8 @@
   align-items: center;
 }
 .Room main aside > div {
-  padding: 1em 2em;
+  padding: 1em 1.5em;
+  text-align: center;
   color: black;
   background-color: white;
   border: 1px solid black;

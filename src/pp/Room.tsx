@@ -99,6 +99,11 @@ export function Room(props: {
               RESET
             </button>
           </div>
+          <div>
+            <button onClick={() => window.location.href = '/'}>
+              EXIT
+            </button>
+          </div>
         </section>
       </header>
 
@@ -129,7 +134,9 @@ export function Room(props: {
         {(room.reveal && average > 0) ? (
           <aside>
             <div>
-              Average: {average.toFixed(1)}
+              Average
+              <br/>
+              <b>{average.toFixed(1)}</b>
             </div>
           </aside>
         ) : ''}
