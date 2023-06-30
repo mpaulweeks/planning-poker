@@ -3,12 +3,11 @@ import { RoomInit, UserState } from "../lib/types";
 import styles from './Room.module.css';
 import { getStorageName, setStorageName } from "../lib/localStorage";
 import { CSSProperties } from "react";
-import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
+import { CopyToClipboard } from "./CopyToClipboard";
 
 export function Room(props: {
   init: RoomInit;
 }) {
-  const {copied, copyToClipboard} = useCopyToClipboard();
   const {api, room} = useDB(props);
   const thisUser = (room?.users ?? {})[props.init.uid];
   if (!(room && thisUser)) {
@@ -52,17 +51,6 @@ export function Room(props: {
           fontWeight: 'bold',
         }}>
           {room.rid}
-          {' '}
-          <span
-            style={{
-              cursor: copied ? 'not-allowed' : 'pointer',
-              color: copied ? 'gray' : 'initial',
-              fontSize: '0.8em',
-            }}
-            onClick={() => !copied && copyToClipboard(window.location.href)}
-          >
-            {copied ? 'copied!' : '🔗'}
-          </span>
         </div>
 
         <section>
@@ -160,6 +148,7 @@ export function Room(props: {
           </aside>
         ) : ''}
       </main>
+      <CopyToClipboard toCopy={window.location.href} />
     </div>
   );
 }
