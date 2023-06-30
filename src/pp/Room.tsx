@@ -2,6 +2,8 @@ import { useDB } from "../hooks/useDB";
 import { RoomInit, UserState } from "../lib/types";
 import styles from './Room.module.css';
 import { getStorageName, setStorageName } from "../lib/localStorage";
+import { CSSProperties } from "react";
+import { CopyToClipboard } from "./CopyToClipboard";
 
 export function Room(props: {
   init: RoomInit;
@@ -29,7 +31,10 @@ export function Room(props: {
     return num;
   }).filter(v => !isNaN(v));
   const average = voteNums.reduce((sum, elm) => sum + elm, 0) / voteNums.length;
-  
+
+  const gridStyle: CSSProperties = {
+    gridTemplateColumns: `repeat(${Math.min(users.length, 3)}, 1fr)`,
+  };
   function userToColor(user: UserState, opacity?: string): string {
     return (
       (user.spectate && '#808080') || // grey
@@ -47,7 +52,8 @@ export function Room(props: {
         }}>
           {room.rid}
         </div>
-        <div className={styles.Self}>
+
+        <section>
           <input
             value={thisUser.name}
             placeholder="your name here"
@@ -79,9 +85,36 @@ export function Room(props: {
           >
             SPECTATE
           </button>
-        </div>
+        </section>
+
+        <section>
+          <div>
+            <button
+              disabled={!room.reveal && !average}
+              onClick={() => api.current.updateRoom({
+                reveal: !room.reveal,
+              })}
+            >
+              {room.reveal ? 'HIDE': 'REVEAL'}
+            </button>
+          </div>
+          <div>
+            <button
+              disabled={voteNums.length === 0}
+              onClick={() => api.current.resetRoom()}
+            >
+              RESET
+            </button>
+          </div>
+          <div>
+            <button onClick={() => window.location.href = '/'}>
+              EXIT
+            </button>
+          </div>
+        </section>
       </header>
-      <section>
+
+      <main style={gridStyle}>
         {users.map(user => (
           <div key={user.uid} className={styles.Vote} style={{
             borderColor: userToColor(user),
@@ -105,26 +138,17 @@ export function Room(props: {
             </div>
           </div>
         ))}
-      </section>
-      <footer>
         {(room.reveal && average > 0) ? (
-          <div>
-            Average: {average.toFixed(1)}
-          </div>
+          <aside>
+            <div>
+              Average
+              <br/>
+              <b>{average.toFixed(1)}</b>
+            </div>
+          </aside>
         ) : ''}
-        <div>
-          <button onClick={() => api.current.updateRoom({
-            reveal: !room.reveal,
-          })}>
-            {room.reveal ? 'HIDE': 'REVEAL'}
-          </button>
-        </div>
-        <div>
-          <button onClick={() => api.current.resetRoom()}>
-            RESET
-          </button>
-        </div>
-      </footer>
+      </main>
+      <CopyToClipboard toCopy={window.location.href} />
     </div>
   );
 }

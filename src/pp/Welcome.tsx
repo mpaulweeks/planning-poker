@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OptionsSeparator } from "../lib/types";
+import { OptionsSeparator, QueryParams } from "../lib/types";
 import styles from './Welcome.module.css';
 
 export function Welcome() {
@@ -8,8 +8,8 @@ export function Welcome() {
 
   const safeOptions = options.split(',').map(s => s.trim()).join(OptionsSeparator);
   const searchParams = new URLSearchParams();
-  searchParams.append('room', room);
-  searchParams.append('options', safeOptions);
+  searchParams.append(QueryParams.Room, room);
+  searchParams.append(QueryParams.Options, safeOptions);
   const url = searchParams.toString();
   console.log(url);
 
@@ -18,6 +18,13 @@ export function Welcome() {
       <h1>
         planning-poker
       </h1>
+      <div>
+        free website to <a href="https://en.wikipedia.org/wiki/Planning_poker">help with estimating</a>
+        <br/>
+        once you create a room, you can share the URL with your teammates
+        <br/>
+        you can also bookmark that URL for easy access in the future
+      </div>
       <form onSubmit={evt => {
         evt.preventDefault();
         window.location.search = url;
@@ -49,7 +56,10 @@ export function Welcome() {
             create room
           </button>
         </div>
-        </form>
+      </form>
+      <div>
+        created by <a href="https://github.com/mpaulweeks/planning-poker">mpaulweeks</a>
+      </div>
     </div>
   );
 }

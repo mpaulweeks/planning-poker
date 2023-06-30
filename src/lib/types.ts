@@ -1,5 +1,11 @@
 export const OptionsSeparator = '-';
 
+export const QueryParams = {
+  Admin: 'admin',
+  Room: 'room',
+  Options: 'options',
+} as const;
+
 export interface UserState {
   uid: string;
   name: string;
