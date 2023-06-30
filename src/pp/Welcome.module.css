@@ -8,6 +8,14 @@
   padding: 1em;
   box-sizing: border-box;
 }
+.Welcome form,
+.Welcome form input,
+.Welcome form button {
+  font-size: 1.5rem;
+}
+.Welcome form button {
+  padding: 1rem 2rem;
+}
 .Welcome form > * {
   margin: 1rem 0;
 }
