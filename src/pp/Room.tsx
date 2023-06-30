@@ -88,14 +88,20 @@ export function Room(props: {
 
         <section>
           <div>
-            <button onClick={() => api.current.updateRoom({
-              reveal: !room.reveal,
-            })}>
+            <button
+              disabled={!room.reveal && !average}
+              onClick={() => api.current.updateRoom({
+                reveal: !room.reveal,
+              })}
+            >
               {room.reveal ? 'HIDE': 'REVEAL'}
             </button>
           </div>
           <div>
-            <button onClick={() => api.current.resetRoom()}>
+            <button
+              disabled={voteNums.length === 0}
+              onClick={() => api.current.resetRoom()}
+            >
               RESET
             </button>
           </div>
