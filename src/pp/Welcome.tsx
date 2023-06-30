@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OptionsSeparator } from "../lib/types";
+import { OptionsSeparator, QueryParams } from "../lib/types";
 import styles from './Welcome.module.css';
 
 export function Welcome() {
@@ -8,8 +8,8 @@ export function Welcome() {
 
   const safeOptions = options.split(',').map(s => s.trim()).join(OptionsSeparator);
   const searchParams = new URLSearchParams();
-  searchParams.append('room', room);
-  searchParams.append('options', safeOptions);
+  searchParams.append(QueryParams.Room, room);
+  searchParams.append(QueryParams.Options, safeOptions);
   const url = searchParams.toString();
   console.log(url);
 

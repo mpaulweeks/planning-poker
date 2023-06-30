@@ -1,17 +1,17 @@
 import { Admin } from "./Admin";
 import { Room } from "./Room";
-import { OptionsSeparator, RoomInit } from "../lib/types";
+import { OptionsSeparator, QueryParams, RoomInit } from "../lib/types";
 import { Welcome } from "./Welcome";
 
 export function PlanningPoker() {
   const searchParams = new URLSearchParams(window.location.search);
-  const admin = searchParams.get('admin');
+  const admin = searchParams.get(QueryParams.Admin);
   if (admin) {
     return <Admin />
   }
 
-  const rid = searchParams.get('room');
-  const optionsStr = searchParams.get('options');
+  const rid = searchParams.get(QueryParams.Room);
+  const optionsStr = searchParams.get(QueryParams.Options);
   const options = (optionsStr ?? '').split(OptionsSeparator);
   const uid = new Date().getTime().toString();
 
