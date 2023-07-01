@@ -5,6 +5,8 @@ import { getStorageName, setStorageName } from "../lib/localStorage";
 import { CSSProperties } from "react";
 import { CopyToClipboard } from "./CopyToClipboard";
 
+const hasVote = (arg: (string | null)): arg is string => arg !== null;
+
 export function Room(props: {
   init: RoomInit;
 }) {
@@ -23,13 +25,13 @@ export function Room(props: {
   }
 
   const users = Object.values(room.users ?? {});
-  const voteNums = users.map(u => {
+  const votes = users.map(u => {
     const { spectate, vote } = u;
-    if (spectate) { return NaN; }
-    if (!vote) { return NaN; }
-    const num = parseInt(vote);
-    return num;
-  }).filter(v => !isNaN(v));
+    if (spectate) { return null; }
+    if (!vote) { return null; } // coerce falsey (empty or undefined) to null
+    return vote;
+  }).filter(hasVote);
+  const voteNums = votes.map(v => parseInt(v)).filter(v => !isNaN(v));
   const average = voteNums.reduce((sum, elm) => sum + elm, 0) / voteNums.length;
 
   const gridStyle: CSSProperties = {
@@ -90,7 +92,7 @@ export function Room(props: {
         <section>
           <div>
             <button
-              disabled={!room.reveal && !average}
+              disabled={!room.reveal && votes.length === 0}
               onClick={() => api.current.updateRoom({
                 reveal: !room.reveal,
               })}
@@ -100,7 +102,7 @@ export function Room(props: {
           </div>
           <div>
             <button
-              disabled={voteNums.length === 0}
+              disabled={votes.length === 0}
               onClick={() => api.current.resetRoom()}
             >
               RESET
